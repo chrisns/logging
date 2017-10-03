@@ -1,0 +1,52 @@
+version: "3"
+services:
+#  elasticsearch:
+#    labels:
+#      - com.df.notify=true
+#      - com.df.distribute=true
+#      - com.df.serviceDomain=elasticsearch.p.cns.me
+#      - com.df.servicePath=/
+#      - com.df.port=9200
+#      - com.df.httpsOnly=true
+#      - com.df.xForwardedProto=true
+#    networks:
+#      elasticsearch:
+#    volumes:
+#      - data:/usr/share/elasticsearch/data
+#    deploy:
+#      replicas: 1
+#      resources:
+#        limits:
+#          cpus: '1'
+#          memory: 512M
+#    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.2
+#    environment:
+#      - discovery.type=single-node
+
+  kibana:
+    labels:
+      - com.df.notify=true
+      - com.df.distribute=true
+      - com.df.serviceDomain=kibana.p.cns.me
+      - com.df.servicePath=/
+      - com.df.port=5601
+      - com.df.httpsOnly=true
+      - com.df.xForwardedProto=true
+    networks:
+      proxy:
+    volumes:
+      - data:/usr/share/elasticsearch/data
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+    image: docker.elastic.co/kibana/kibana:5.6.2
+    environment:
+      SERVER_NAME: kibana.p.cns.me
+      ELASTICSEARCH_URL: ${ELASTICSEARCH_URL}
+
+networks:
+  proxy:
+    external: true
