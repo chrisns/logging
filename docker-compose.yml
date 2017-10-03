@@ -34,8 +34,6 @@ services:
       - com.df.xForwardedProto=true
     networks:
       proxy:
-    volumes:
-      - data:/usr/share/elasticsearch/data
     deploy:
       replicas: 1
       resources:
